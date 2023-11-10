@@ -69,7 +69,7 @@ const showWindow = (vlSpec: vegaLite.TopLevelSpec) => {
       `doEmbed(${JSON.stringify(vlSpec)});`,
       (result: boolean) => {
         if (!result) {
-          console.log("Plot script execution failed, please try again!");
+          console.error("Plot script execution failed, please try again!");
           gui.MessageLoop.quit();
         }
       },
