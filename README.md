@@ -1,5 +1,7 @@
 # vega-plot
 
+[![NPM Version](https://img.shields.io/npm/v/vega-plot)](https://www.npmjs.com/package/vega-plot)
+
 Display the vega-lite charts in the window.
 
 ### Example
