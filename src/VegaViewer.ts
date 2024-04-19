@@ -23,41 +23,38 @@ const script = (filepath: string) =>
 const javascript = (filepath: string) =>
   `<script type="text/javascript">${script(filepath)}</script>`;
 
-const javascripts = () => `
-${javascript("../vega/vega.min.js")}
-${javascript("../vega/vega-lite.min.js")}
-${javascript("../vega/vega-embed.min.js")}
-<script type="text/javascript">
-  function doEmbed(spec) {
-    vegaEmbed("#vis", spec, { actions: false }).then(function (result) {
-      var view = result.view;
-      var container = view.container();
-      view.addResizeListener(function (width, height) {
-        window.innerWidth = container.offsetWidth;
-        window.innerHeight = container.offsetHeight;
-        resize(container.offsetWidth, container.offsetHeight);
-      });
-      resize(container.offsetWidth, container.offsetHeight);
-    });
-  }
-</script>`;
-
-const VegaViewer = () => `
+const VegaViewer = (title: string) => `
 <html lang="en">
-    <head>
-      <meta charSet="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title>Vega Viewer</title>
-      <style type="text/css">
-        body { margin: 0px; padding: 0px; }
-        #vis { display: inline-block; }
-      </style>
-    </head>
-    <body>
-      <div id="vis"></div>
-      <div>${javascripts()}</div>
-    </body>
-  </html>`;
+  <head>
+    <meta charSet="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>${title}</title>
+    <style type="text/css">
+      body { margin: 0px; padding: 0px; }
+      #vis { display: inline-block; }
+    </style>
+  </head>
+  <body>
+    <div id="vis"></div>
+    ${javascript("../vega/vega.min.js")}
+    ${javascript("../vega/vega-lite.min.js")}
+    ${javascript("../vega/vega-embed.min.js")}
+    <script type="text/javascript">
+      function doEmbed(spec) {
+        vegaEmbed("#vis", spec, { actions: false }).then(function (result) {
+          var view = result.view;
+          var container = view.container();
+          view.addResizeListener(function (width, height) {
+            window.innerWidth = container.offsetWidth;
+            window.innerHeight = container.offsetHeight;
+            resize(container.offsetWidth, container.offsetHeight);
+          });
+          resize(container.offsetWidth, container.offsetHeight);
+        });
+      }
+    </script>
+  </body>
+</html>`;
 
 const showWindow = (vlSpec: vegaLite.TopLevelSpec) => {
   const window = gui.Window.create({});
@@ -86,7 +83,7 @@ const showWindow = (vlSpec: vegaLite.TopLevelSpec) => {
   };
 
   browser.setStyle({ flex: 1 });
-  browser.loadHTML(VegaViewer(), "");
+  browser.loadHTML(VegaViewer("Vega Viewer"), "");
 
   contentview.setStyle({ flexDirection: "row" });
   contentview.addChildView(browser);
