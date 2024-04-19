@@ -12,8 +12,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import React from "react";
-import ReactDomServer from "react-dom/server";
 import vegaLite from "vega-lite";
 import gui from "gui";
 
@@ -44,22 +42,22 @@ ${javascript("../vega/vega-embed.min.js")}
   }
 </script>`;
 
-const VegaViewer = () => (
-  <html lang="en">
+const VegaViewer = () => `
+<html lang="en">
     <head>
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <title>Vega Viewer</title>
       <style type="text/css">
-        {`body { margin: 0px; padding: 0px; } #vis { display: inline-block; }`}
+        body { margin: 0px; padding: 0px; }
+        #vis { display: inline-block; }
       </style>
     </head>
     <body>
       <div id="vis"></div>
-      <div dangerouslySetInnerHTML={{ __html: javascripts() }}></div>
+      <div>${javascripts()}</div>
     </body>
-  </html>
-);
+  </html>`;
 
 const showWindow = (vlSpec: vegaLite.TopLevelSpec) => {
   const window = gui.Window.create({});
@@ -88,7 +86,7 @@ const showWindow = (vlSpec: vegaLite.TopLevelSpec) => {
   };
 
   browser.setStyle({ flex: 1 });
-  browser.loadHTML(ReactDomServer.renderToString(<VegaViewer />), "");
+  browser.loadHTML(VegaViewer(), "");
 
   contentview.setStyle({ flexDirection: "row" });
   contentview.addChildView(browser);

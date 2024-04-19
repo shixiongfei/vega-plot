@@ -32,8 +32,6 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@types/node": "^20.8.9",
-    "@types/react": "^18.2.36",
-    "@types/react-dom": "^18.2.14",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
     "eslint": "^8.52.0",
@@ -43,8 +41,6 @@
   "dependencies": {
     "gui": "^0.14.1",
     "punycode": "^2.3.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "vega": "^5.25.0",
     "vega-lite": "^5.16.1"
   }
