@@ -1,6 +1,6 @@
 {
   "name": "vega-plot",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Display the vega-lite charts in the window.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
