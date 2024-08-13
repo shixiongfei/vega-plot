@@ -12,7 +12,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import vegaLite from "vega-lite";
+import { Spec as VgSpec } from "vega";
+import { TopLevelSpec as VlSpec } from "vega-lite";
 import gui from "gui";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -56,7 +57,7 @@ const VegaViewer = (title: string) => `
   </body>
 </html>`;
 
-const showWindow = (vlSpec: vegaLite.TopLevelSpec) => {
+const showWindow = (spec: VgSpec | VlSpec) => {
   const window = gui.Window.create({});
   const contentview = gui.Container.create();
   const browser = gui.Browser.create({
@@ -72,7 +73,7 @@ const showWindow = (vlSpec: vegaLite.TopLevelSpec) => {
 
   browser.onFinishNavigation = () => {
     browser.executeJavaScript(
-      `doEmbed(${JSON.stringify(vlSpec)});`,
+      `doEmbed(${JSON.stringify(spec)});`,
       (result: boolean) => {
         if (!result) {
           console.error("Plot script execution failed, please try again!");

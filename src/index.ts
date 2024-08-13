@@ -11,14 +11,14 @@
 
 import { fileURLToPath } from "node:url";
 import { fork } from "node:child_process";
-import vega from "vega";
-import vegaLite from "vega-lite";
+import vega, { Spec as VgSpec } from "vega";
+import vegaLite, { TopLevelSpec as VlSpec } from "vega-lite";
 import VegaViewer from "./VegaViewer.js";
 
-export const view = (spec: vega.Spec) =>
+export const view = (spec: VgSpec) =>
   new vega.View(vega.parse(spec), { renderer: "none" });
 
-export const lite = (vlSpec: vegaLite.TopLevelSpec) => {
+export const lite = (vlSpec: VlSpec) => {
   const spec = vegaLite.compile(vlSpec).spec;
   return view(spec);
 };
@@ -43,7 +43,7 @@ if (process.argv[2] === "vega-viewer") {
 
 const filename = fileURLToPath(import.meta.url);
 
-export const plot = (vlSpec: vegaLite.TopLevelSpec) =>
-  queuedExecute(() => fork(filename, ["vega-viewer"]).send(vlSpec));
+export const plot = (spec: VgSpec | VlSpec) =>
+  queuedExecute(() => fork(filename, ["vega-viewer"]).send(spec));
 
 export default { view, lite, plot };
